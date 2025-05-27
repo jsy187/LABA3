@@ -147,6 +147,7 @@
     <ClInclude Include="pipe_act.h" />
     <ClInclude Include="pipe_sort.h" />
     <ClInclude Include="pumping_station.h" />
+    <ClInclude Include="pumping_station_sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
