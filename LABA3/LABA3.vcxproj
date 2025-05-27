@@ -130,6 +130,7 @@
     <ClCompile Include="LABA3.cpp" />
     <ClCompile Include="pipe.cpp" />
     <ClCompile Include="pipe_act.cpp" />
+    <ClCompile Include="pipe_sort.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
