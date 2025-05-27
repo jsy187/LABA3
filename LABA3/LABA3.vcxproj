@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="file_io.cpp" />
     <ClCompile Include="LABA3.cpp" />
     <ClCompile Include="pipe.cpp" />
     <ClCompile Include="pipes_act.cpp" />
