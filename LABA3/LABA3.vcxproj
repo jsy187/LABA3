@@ -142,6 +142,7 @@
     <ClInclude Include="file_io.h" />
     <ClInclude Include="graph.h" />
     <ClInclude Include="pipe.h" />
+    <ClInclude Include="pipe_act.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
