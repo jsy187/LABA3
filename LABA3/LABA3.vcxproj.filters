@@ -62,5 +62,8 @@
     <ClInclude Include="pipe_sort.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="pipes_act.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
