@@ -133,6 +133,7 @@
     <ClCompile Include="pipe_act.cpp" />
     <ClCompile Include="pipe_sort.cpp" />
     <ClCompile Include="pumping_station.cpp" />
+    <ClCompile Include="pumping_station_act.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
