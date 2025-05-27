@@ -68,7 +68,7 @@
     <ClInclude Include="pumping_station.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="pimping_station_act.h">
+    <ClInclude Include="pumping_station_act.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="pumping_station_sort.h">
