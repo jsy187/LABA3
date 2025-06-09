@@ -1,9 +1,9 @@
 #include <iostream> 
 #include <string> 
-#include "pipe.h" 
-#include "utils.h" 
-#include <format>
 #include <fstream>
+
+#include "utils.h"  
+#include "pipe.h"
 
 using namespace std;
 
@@ -55,18 +55,20 @@ ostream& operator << (ostream& out, const Pipe& pipe) {
 }
 
 
-istream& operator >> (istream& in, Pipe& pipe) {
-    pipe.id = ++pipe.MaxID;
+istream& operator>>(istream& in, Pipe& pipe) {
+    cout << "Enter pipe name: ";
+    INPUT_LINE(in, pipe.name);
 
-    cout << "Pipe name > ";
-    cin.ignore();
-    getline(in, pipe.name);
-    cout << "Pipe length > ";
-    pipe.length = GetCorrectNumber<double>(1, 999);
-    cout << "Pipe diameter > ";
-    pipe.diameter = GetCorrectNumber<int>(1, 1400);
-    cout << "Pipe repair > ";
-    pipe.repair = GetCorrectNumber<bool>(0, 1);
+    cout << "Enter pipe length: ";
+    pipe.length = GetCorrectNumber<double>(0, 10000);
+
+    cout << "Enter pipe diameter: ";
+    pipe.diameter = GetCorrectNumber<int>( 100, 1400);
+
+    cout << "Enter repair status (1 - in repair, 0 - working): ";
+    pipe.repair = GetCorrectNumber<int>(0, 1);
+
+    pipe.id = ++Pipe::MaxID;
 
     return in;
 }
@@ -79,14 +81,11 @@ void Pipe::saveToFile(std::ofstream& file) const {
         << repair << "\n";
 }
 
-void Pipe::loadFromFile(std::ifstream& file) {
+void Pipe::loadFromFile(ifstream& file) {
     file >> id;
     file.ignore();
-    std::getline(file, name);
-    file >> length;
-    file >> diameter;
-    file >> repair;
-
+    getline(file, name);
+    file >> length >> diameter >> repair;
 
     if (id > MaxID) {
         MaxID = id;

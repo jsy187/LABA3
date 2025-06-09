@@ -1,22 +1,23 @@
-﻿#include <iostream> 
+﻿#include <iostream>
 #include <fstream>
-#include <unordered_map> 
-#include "pipe.h" 
-#include "pumping_station.h" 
-#include "utils.h" 
-#include "pipe_act.h" 
-#include "pumping_station_act.h" 
-#include "pipe_sort.h"
-#include "pumping_station_sort.h"
-#include "pipes_act.h" 
+#include <unordered_map>
 #include <chrono>
 #include <format>
+
+#include "pipe.h"
+#include "pumping_station.h"
+#include "utils.h"
+#include "pipe_act.h"
+#include "pumping_station_act.h"
+#include "pipe_sort.h"
+#include "pumping_station_sort.h"
+#include "pipes_act.h"
 #include "file_io.h"
 #include "graph.h"
 
 using namespace std;
 
-void handleModifyMultiplePipes(std::unordered_map<int, Pipe>& pipes) {
+void handleModifyMultiplePipes(unordered_map<int, Pipe>& pipes) {
     modifyMultiplePipesRepairStatus(pipes);
 }
 
@@ -29,27 +30,18 @@ void pipeMenu(unordered_map<int, Pipe>& pipes) {
             << "3. Modify Pipe Repair Status\n"
             << "4. Delete Pipe\n"
             << "5. Sort/Filter Pipes\n"
-            << "6. Modify Pipes Repair Status(All|selected pipes)\n"
+            << "6. Modify Multiple Pipes Repair Status\n"
             << "0. Return to Main Menu\n"
             << "Choose an action: ";
 
         choice = GetCorrectNumber<int>(0, 6);
 
         switch (choice) {
-        case 1:
-            addPipe(pipes);
-            break;
-        case 2:
-            viewPipes(pipes);
-            break;
-        case 3:
-            modifyPipeRepairStatus(pipes);
-            break;
-        case 4:
-            deletePipe(pipes);
-            break;
-        case 5:
-        {
+        case 1: addPipe(pipes); break;
+        case 2: viewPipes(pipes); break;
+        case 3: modifyPipeRepairStatus(pipes); break;
+        case 4: deletePipe(pipes); break;
+        case 5: {
             int filterChoice;
             cout << "\nSort/Filter Pipes Menu:\n"
                 << "1. Sort by Name\n"
@@ -61,34 +53,14 @@ void pipeMenu(unordered_map<int, Pipe>& pipes) {
             filterChoice = GetCorrectNumber<int>(0, 4);
 
             switch (filterChoice) {
-            case 1:
-                sortPipesByName(pipes);
-                break;
-            case 2:
-                sortPipesByRepairStatus(pipes);
-                break;
-            case 3:
-                filterPipesByName(pipes);
-                break;
-            case 4:
-                filterPipesByRepairStatus(pipes);
-                break;
-            case 0:
-                cout << "Returning to Pipe Menu.\n";
-                break;
-            default:
-                cout << "Invalid choice. Please try again.\n";
+            case 1: sortPipesByName(pipes); break;
+            case 2: sortPipesByRepairStatus(pipes); break;
+            case 3: filterPipesByName(pipes); break;
+            case 4: filterPipesByRepairStatus(pipes); break;
             }
+            break;
         }
-        break;
-        case 6:
-            handleModifyMultiplePipes(pipes);
-            break;
-        case 0:
-            cout << "Returning to Main Menu.\n";
-            break;
-        default:
-            cout << "Invalid choice. Please try again.\n";
+        case 6: handleModifyMultiplePipes(pipes); break;
         }
     } while (choice != 0);
 }
@@ -108,20 +80,11 @@ void pumpingStationMenu(unordered_map<int, PumpingStation>& stations) {
         choice = GetCorrectNumber<int>(0, 5);
 
         switch (choice) {
-        case 1:
-            addPumpingStation(stations);
-            break;
-        case 2:
-            viewPumpingStations(stations);
-            break;
-        case 3:
-            modifyPumpingStationStatus(stations);
-            break;
-        case 4:
-            deletePumpingStation(stations);
-            break;
-        case 5:
-        {
+        case 1: addPumpingStation(stations); break;
+        case 2: viewPumpingStations(stations); break;
+        case 3: modifyPumpingStationStatus(stations); break;
+        case 4: deletePumpingStation(stations); break;
+        case 5: {
             int filterChoice;
             cout << "\nSort/Filter Pumping Stations Menu:\n"
                 << "1. Sort by Name\n"
@@ -133,43 +96,25 @@ void pumpingStationMenu(unordered_map<int, PumpingStation>& stations) {
             filterChoice = GetCorrectNumber<int>(0, 4);
 
             switch (filterChoice) {
-            case 1:
-                sortPumpingStationsByName(stations);
-                break;
-            case 2:
-                sortPumpingStationsByInactiveShopsPercentage(stations);
-                break;
-            case 3:
-                filterPumpingStationsByName(stations);
-                break;
-            case 4:
-                filterPumpingStationsByInactiveShopsPercentage(stations);
-                break;
-            case 0:
-                cout << "Returning to Pumping Station Menu.\n";
-                break;
-            default:
-                cout << "Invalid choice. Please try again.\n";
+            case 1: sortPumpingStationsByName(stations); break;
+            case 2: sortPumpingStationsByInactiveShopsPercentage(stations); break;
+            case 3: filterPumpingStationsByName(stations); break;
+            case 4: filterPumpingStationsByInactiveShopsPercentage(stations); break;
             }
-        }
-        break;
-        case 0:
-            cout << "Returning to Main Menu.\n";
             break;
-        default:
-            cout << "Invalid choice. Please try again.\n";
+        }
         }
     } while (choice != 0);
 }
 
 int main() {
-
     unordered_map<int, PumpingStation> stations;
     unordered_map<int, Pipe> pipes;
-    std::unordered_map<int, std::vector<Connection>> graph;
-    redirect_output_wrapper cerr_out(std::cerr);
-    std::string time = std::format("{:%d_%m_%Y %H_%M_%OS}", std::chrono::system_clock::now());
-    std::ofstream logfile("log_" + time + ".txt");
+    unordered_map<int, vector<Connection>> graph;
+
+    redirect_output_wrapper cerr_out(cerr);
+    string time = format("{:%d_%m_%Y_%H_%M_%OS}", chrono::system_clock::now());
+    ofstream logfile("log_" + time + ".txt");
     if (logfile)
         cerr_out.redirect(logfile);
 
@@ -191,12 +136,8 @@ int main() {
         choice = GetCorrectNumber<int>(0, 8);
 
         switch (choice) {
-        case 1:
-            pipeMenu(pipes);
-            break;
-        case 2:
-            pumpingStationMenu(stations);
-            break;
+        case 1: pipeMenu(pipes); break;
+        case 2: pumpingStationMenu(stations); break;
         case 3: {
             string filename;
             cout << "Enter filename to save data: ";
@@ -205,8 +146,7 @@ int main() {
             saveGraphToFile(graph, filename);
             break;
         }
-        case 4:
-        {
+        case 4: {
             string filename;
             cout << "Enter filename to load data: ";
             cin >> filename;
@@ -214,27 +154,17 @@ int main() {
             loadGraphFromFile(graph, filename);
             break;
         }
-        case 5:
-            connectStations(pipes, stations, graph);
-            break;
-        case 6:
-            printGraph(graph, stations);
-            break;
-        case 7:
-            topologicalSort(graph, stations);
-            break;
-        case 8:
-            int stid;
-            stid = GetCorrectNumber<int>(1, 20);
+        case 5: connectStations(pipes, stations, graph); break;
+        case 6: printGraph(graph, stations); break;
+        case 7: topologicalSort(graph, stations); break;
+        case 8: {
+            int stid = GetCorrectNumber<int>(1, 20);
             removeEdge(graph, stations, stid);
             break;
-        case 0:
-            cout << "Exiting the program.\n";
-            break;
-        default:
-            cout << "Invalid choice. Please try again.\n";
+        }
         }
     } while (choice != 0);
 
+    cout << "Exiting program.\n";
     return 0;
 }

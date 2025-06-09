@@ -4,12 +4,14 @@
 #include "utils.h" 
 #include <unordered_map>
 #include <fstream>
+
 using namespace std;
 
 void addPipe(std::unordered_map<int, Pipe>& pipes) {
     Pipe pipe;
     cin >> pipe;
     pipes[pipe.get_id()] = pipe;
+    cerr << "[LOG] Pipe added. ID = " << pipe.get_id() << "\n";
     cout << "Pipe added successfully.\n";
 }
 
@@ -18,35 +20,39 @@ void viewPipes(const std::unordered_map<int, Pipe>& pipes) {
         cout << "No pipes available.\n";
     }
     else {
-        for (const auto& p : pipes) {
-            cout << p.second << endl;
+        for (const auto& [id, pipe] : pipes) {
+            cout << pipe << endl;
         }
     }
 }
 
 void modifyPipeRepairStatus(std::unordered_map<int, Pipe>& pipes) {
-    int pipeId;
     cout << "Enter pipe ID to modify: ";
-    cin >> pipeId;
-    if (pipes.find(pipeId) != pipes.end()) {
-        bool repairStatus = !pipes[pipeId].get_repair();
-        pipes[pipeId].set_repair(repairStatus);
+    int pipeId = GetCorrectNumber<int>(1, Pipe::get_MaxID());
+
+    auto it = pipes.find(pipeId);
+    if (it != pipes.end()) {
+        bool repairStatus = !it->second.get_repair();
+        it->second.set_repair(repairStatus);
+        cerr << "[LOG] Pipe ID = " << pipeId << " repair status changed to " << repairStatus << "\n";
         cout << "Pipe repair status updated.\n";
     }
     else {
+        cerr << "[ERROR] Pipe ID = " << pipeId << " not found.\n";
         cout << "Pipe not found.\n";
     }
 }
 
 void deletePipe(std::unordered_map<int, Pipe>& pipes) {
-    int pipeId;
     cout << "Enter pipe ID to delete: ";
-    cin >> pipeId;
-    if (pipes.find(pipeId) != pipes.end()) {
-        pipes.erase(pipeId);
+    int pipeId = GetCorrectNumber<int>(1, Pipe::get_MaxID());
+
+    if (pipes.erase(pipeId)) {
+        cerr << "[LOG] Pipe ID = " << pipeId << " deleted.\n";
         cout << "Pipe deleted successfully.\n";
     }
     else {
+        cerr << "[ERROR] Pipe ID = " << pipeId << " not found.\n";
         cout << "Pipe not found.\n";
     }
 }

@@ -17,7 +17,7 @@ int PumpingStation::get_id() const {
 }
 
 
-std::string PumpingStation::get_name() const {
+string PumpingStation::get_name() const {
     return this->name;
 }
 
@@ -53,24 +53,29 @@ ostream& operator << (ostream& out, const PumpingStation& ps) {
         << "Pumping Station name: " << ps.name << endl
         << "Total Shops: " << ps.totalShops << endl
         << "Active Shops: " << ps.activeShops << endl
-        << "Efficiency: " << ps.efficiency << endl;
+        << "Efficiency: " << ps.efficiency << "%" << endl;
     return out;
 }
 
-istream& operator >> (istream& in, PumpingStation& ps) {
-    ps.id = ++ps.MaxID;
-    cout << "Pumping Station name > ";
-    cin.ignore();
-    getline(in, ps.name);
-    cout << "Total shops > ";
+istream& operator>>(istream& in, PumpingStation& ps) {
+    cout << "Enter name: ";
+    INPUT_LINE(in, ps.name);
+
+    cout << "Enter total number of shops: ";
     ps.totalShops = GetCorrectNumber<int>(1, 100);
-    cout << "Active shops > ";
+
+    cout << "Enter number of active shops: ";
     ps.activeShops = GetCorrectNumber<int>(0, ps.totalShops);
-    cout << "Efficiency > ";
+
+    cout << "Enter efficiency (0.0 - 100.0): ";
     ps.efficiency = GetCorrectNumber<double>(0.0, 100.0);
+
+    ps.id = ++PumpingStation::MaxID;
 
     return in;
 }
+
+
 void PumpingStation::saveToFile(std::ofstream& file) const {
     file << id << "\n"
         << name << "\n"
@@ -79,14 +84,11 @@ void PumpingStation::saveToFile(std::ofstream& file) const {
         << efficiency << "\n";
 }
 
-void PumpingStation::loadFromFile(std::ifstream& file) {
+void PumpingStation::loadFromFile(ifstream& file) {
     file >> id;
     file.ignore();
-    std::getline(file, name);
-    file >> totalShops;
-    file >> activeShops;
-    file >> efficiency;
-
+    getline(file, name);
+    file >> totalShops >> activeShops >> efficiency;
 
     if (id > MaxID) {
         MaxID = id;
